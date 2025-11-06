@@ -65,7 +65,7 @@ function install_k8s_storageclass() {
     echo "Installing OpenEBS"
     helm repo add openebs https://openebs.github.io/charts
     helm repo update
-    wget https://raw.githubusercontent.com/aerOS-Project/KubeEdge-installation/refs/heads/resources/helm-charts-manifests/openebs-kubeedge-values.yaml
+    wget https://raw.githubusercontent.com/aerOS-Project/KubeEdge-installation/refs/heads/main/resources/helm-charts-manifests/openebs-kubeedge-values.yaml
     helm install --create-namespace --namespace openebs openebs openebs/openebs -f openebs-kubeedge-values.yaml --version ${OPENEBS_VERSION}
     helm ls -n openebs
     local storageclass_timeout=400
@@ -120,7 +120,7 @@ function install_cilium(){
 function install_flannel(){
     kubectl create ns kube-flannel
     kubectl label --overwrite ns kube-flannel pod-security.kubernetes.io/enforce=privileged
-    helm install flannel --set podCidr=$POD_CIDR --namespace kube-flannel https://raw.githubusercontent.com/aerOS-Project/KubeEdge-installation/refs/heads/resources/helm-charts-manifests/flannel-helm-chart-kubeedge.tgz --debug
+    helm install flannel --set podCidr=$POD_CIDR --namespace kube-flannel https://github.com/aerOS-Project/KubeEdge-installation/blob/main/resources/helm-charts-manifests/flannel-helm-chart-kubeedge.tgz --debug
 }
 
 
