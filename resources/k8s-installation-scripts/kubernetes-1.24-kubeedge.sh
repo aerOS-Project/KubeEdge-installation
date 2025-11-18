@@ -120,7 +120,7 @@ function install_cilium(){
 function install_flannel(){
     kubectl create ns kube-flannel
     kubectl label --overwrite ns kube-flannel pod-security.kubernetes.io/enforce=privileged
-    helm install flannel --set podCidr=$POD_CIDR --namespace kube-flannel https://github.com/aerOS-Project/KubeEdge-installation/blob/main/resources/helm-charts-manifests/flannel-helm-chart-kubeedge.tgz --debug
+    helm install flannel --set podCidr=$POD_CIDR --namespace kube-flannel https://github.com/aerOS-Project/KubeEdge-installation/raw/refs/heads/main/resources/helm-charts-manifests/flannel-helm-chart-kubeedge.tgz --debug
 }
 
 

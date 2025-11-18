@@ -82,12 +82,12 @@ kubeadm join <node-ip>:6443 --token <token> --discovery-token-ca-cert-hash <hash
 
 ### Following your own procedure
 
-In the K8s cluster creation process, **only deploy the CNI plugin (e.g. Flannel, Cilium, ..) Pods in the original K8s cluster nodes** (not KubeEdge nodes running Edgecore). **If you are using the custom K8s installation script, you can avoid this subsection** because it means that you have succesfully installed a K8s cluster compliant with KubeEdge.
+In the K8s cluster creation process, **only deploy the CNI plugin (e.g. Flannel, Cilium -you'll need [additional configuration](https://kubeedge.io/blog/enable-cilium), ..) Pods in the original K8s cluster nodes** (not KubeEdge *edge* nodes running Edgecore). **If you are using the custom K8s installation script, you can avoid this subsection** because it means that you have succesfully installed a K8s cluster fully compliant with KubeEdge.
 
 Therefore, use the [custom Flannel Helm chart](./resources/helm-charts-manifests/flannel-helm-chart-kubeedge.tgz) to install Flannel DaemonSet only in the cloud nodes (the nodes of the K8s cluster).
 
 ```bash
-helm install flannel --set podCidr="10.216.0.0/16" --namespace kube-flannel flannel-helm-chart-kubeedge.tgz --debug
+helm install flannel --set podCidr="10.216.0.0/16" --namespace kube-flannel [flannel-helm-chart-kubeedge.tgz](https://github.com/aerOS-Project/KubeEdge-installation/raw/refs/heads/main/resources/helm-charts-manifests/flannel-helm-chart-kubeedge.tgz) --debug
 ```
 
 As in the CNI plugin installation, if you are using a custom K8s storage tool such as OpenEBS, please deploy its DaemonSet only in the cloud nodes. In case you are using OpenEBS, create a YAML file (also availabe [here](./resources/helm-charts-manifests/openebs-kubeedge-values.yaml)) with this values (currently we are deploying the DaemonSet Pods only in the Control Plane node because the OpenEBS Helm chart only supports NodeSelector -instead of affinity-, so this chart should be modified):
